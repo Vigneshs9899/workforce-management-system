@@ -33,3 +33,9 @@ class Job(db.Model):
         db.Integer,
         db.ForeignKey("employees.id")
     )
+
+    timesheets = db.relationship(
+    "Timesheet",
+    backref="job",
+    lazy=True
+)

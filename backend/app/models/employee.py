@@ -44,3 +44,9 @@ class Employee(db.Model):
     backref="employee",
     lazy=True
 )
+    
+    timesheets = db.relationship(
+    "Timesheet",
+    backref="employee",
+    lazy=True
+)

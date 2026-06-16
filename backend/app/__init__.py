@@ -7,6 +7,9 @@ from app.models.user import User
 from app.models.employee import Employee
 from app.models.job import Job
 from app.routes.job import job_bp
+from app.routes.timesheet import timesheet_bp
+from app.models.timesheet import Timesheet
+from app.routes.dashboard import dashboard_bp
 
 def create_app():
 
@@ -27,7 +30,16 @@ def create_app():
     job_bp,
     url_prefix="/api"
 )
+    
+    app.register_blueprint(
+    timesheet_bp,
+    url_prefix="/api"
+)
 
+    app.register_blueprint(
+    dashboard_bp,
+    url_prefix="/api"
+)
     
 
     db.init_app(app)
