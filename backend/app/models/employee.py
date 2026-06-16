@@ -38,3 +38,9 @@ class Employee(db.Model):
         db.String(20),
         default="Active"
     )
+
+    jobs = db.relationship(
+    "Job",
+    backref="employee",
+    lazy=True
+)

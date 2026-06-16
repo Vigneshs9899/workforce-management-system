@@ -5,7 +5,8 @@ from app.routes.auth import auth_bp
 from app.routes.employee import employee_bp
 from app.models.user import User
 from app.models.employee import Employee
-
+from app.models.job import Job
+from app.routes.job import job_bp
 
 def create_app():
 
@@ -22,7 +23,10 @@ def create_app():
     url_prefix="/api"
 )
 
-    
+    app.register_blueprint(
+    job_bp,
+    url_prefix="/api"
+)
 
     
 
