@@ -18,14 +18,16 @@ def create_employee():
 
     data = request.get_json()
 
+    employee_count = Employee.query.count() + 1
+
     employee = Employee(
-        employee_code=data["employee_code"],
-        name=data["name"],
-        email=data["email"],
-        phone=data["phone"],
-        department=data["department"],
-        designation=data["designation"]
-    )
+    employee_code=f"EMP{employee_count:03}",
+    name=data.get("name"),
+    email=data.get("email"),
+    phone=data.get("phone"),
+    department=data.get("department"),
+    designation=data.get("designation")
+)
 
     db.session.add(employee)
     db.session.commit()

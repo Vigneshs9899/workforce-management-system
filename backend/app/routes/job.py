@@ -19,9 +19,9 @@ def create_job():
 
     data = request.get_json()
 
-    employee = Employee.query.get(
-        data["employee_id"]
-    )
+    employee = Employee.query.filter_by(
+        employee_code=data["employee_id"]
+    ).first()
 
     if not employee:
         return jsonify({
@@ -31,8 +31,9 @@ def create_job():
     job = Job(
         job_code=data["job_code"],
         title=data["title"],
-        description=data["description"],
-        employee_id=data["employee_id"]
+        description=data.get("description", ""),
+        employee_id=employee.id,
+        status=data["status"]
     )
 
     db.session.add(job)
@@ -56,16 +57,28 @@ def get_jobs():
 
     for job in jobs:
 
+        if job.employee:
+
+            employee_data = {
+                "id": job.employee.id,
+                "name": job.employee.name,
+                "email": job.employee.email
+            }
+
+        else:
+
+            employee_data = {
+                "id": None,
+                "name": "Employee Deleted",
+                "email": ""
+            }
+
         result.append({
             "id": job.id,
             "job_code": job.job_code,
             "title": job.title,
             "status": job.status,
-            "employee": {
-                "id": job.employee.id,
-                "name": job.employee.name,
-                "email": job.employee.email
-            }
+            "employee": employee_data
         })
 
     return jsonify(result)
