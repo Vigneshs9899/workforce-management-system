@@ -2,6 +2,7 @@ import { useState } from "react";
 import api from "../services/api";
 import { useNavigate } from "react-router-dom";
 
+
 function Login() {
 
 
@@ -9,11 +10,13 @@ function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+
+  e.preventDefault();
 
   try {
 
-    const response = await api.post(
+    const res = await api.post(
       "/auth/login",
       {
         email,
@@ -21,21 +24,38 @@ function Login() {
       }
     );
 
-    console.log(response.data);
+    console.log(res.data);
 
     localStorage.setItem(
       "token",
-      response.data.token
+      res.data.token
     );
 
-    navigate("/dashboard");
+    localStorage.setItem(
+      "role",
+      res.data.role
+    );
 
-  } catch (error) {
+    if (res.data.role === "ADMIN") {
 
-    console.log("ERROR:", error);
-    console.log(error.response);
+      navigate("/admin-dashboard");
+
+    }
+    else {
+
+      navigate("/employee-dashboard");
+
+    }
 
   }
+  catch (err) {
+
+    console.log("ERROR:", err);
+
+    alert("Invalid credentials");
+
+  }
+
 };
 
   return (

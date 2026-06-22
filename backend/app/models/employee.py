@@ -42,6 +42,13 @@ class Employee(db.Model):
     jobs = db.relationship(
     "Job",
     backref="employee",
+    lazy=True,
+    cascade="all, delete-orphan"
+)
+    
+    attendance = db.relationship(
+    "Attendance",
+    backref="employee",
     lazy=True
 )
     

@@ -1,0 +1,50 @@
+services:
+
+  db:
+    image: postgres:17
+    container_name: workforce_db
+    restart: always
+
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: workforce
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+
+  backend:
+    build: ./backend
+    container_name: workforce_backend
+
+    ports:
+      - "5000:5000"
+
+    depends_on:
+      - db
+
+    volumes:
+      - ./backend:/app
+
+
+  frontend:
+    build: ./frontend
+    container_name: workforce_frontend
+
+    ports:
+      - "5173:5173"
+
+    depends_on:
+      - backend
+
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+
+volumes:
+  postgres_data:

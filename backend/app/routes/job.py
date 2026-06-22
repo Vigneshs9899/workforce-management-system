@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt
 
 from app.extensions import db
 from app.models.job import Job
@@ -10,105 +10,81 @@ job_bp = Blueprint(
     __name__
 )
 
-@job_bp.route(
-    "/jobs",
-    methods=["POST"]
-)
+
+# ==========================
+# Admin - Create Job
+# ==========================
+@job_bp.route("/jobs", methods=["POST"])
 @jwt_required()
 def create_job():
 
     data = request.get_json()
 
-    employee = Employee.query.filter_by(
-        employee_code=data["employee_id"]
-    ).first()
-
-    if not employee:
-        return jsonify({
-            "message": "Employee not found"
-        }), 404
-
     job = Job(
-        job_code=data["job_code"],
-        title=data["title"],
-        description=data.get("description", ""),
-        employee_id=employee.id,
-        status=data["status"]
+        job_name=data["job_name"],
+        customer=data["customer"],
+        description=data["description"],
+        priority=data["priority"],
+        status=data["status"],
+        due_date=data["due_date"],
+        employee_id=data["employee_id"]
     )
 
     db.session.add(job)
     db.session.commit()
 
     return jsonify({
-        "message": "Job created"
-    }), 201
+        "message": "Job created successfully"
+    })
 
 
-@job_bp.route(
-    "/jobs",
-    methods=["GET"]
-)
+# ==========================
+# Admin - View All Jobs
+# ==========================
+@job_bp.route("/jobs")
 @jwt_required()
 def get_jobs():
 
-    jobs = Job.query.all()
+    jobs = Job.query.order_by(
+        Job.id.desc()
+    ).all()
 
     result = []
 
     for job in jobs:
 
-        if job.employee:
-
-            employee_data = {
-                "id": job.employee.id,
-                "name": job.employee.name,
-                "email": job.employee.email
-            }
-
-        else:
-
-            employee_data = {
-                "id": None,
-                "name": "Employee Deleted",
-                "email": ""
-            }
-
         result.append({
+
             "id": job.id,
-            "job_code": job.job_code,
-            "title": job.title,
+
+            "job_name": job.job_name,
+
+            "customer": job.customer,
+
+            "description": job.description,
+
+            "priority": job.priority,
+
             "status": job.status,
-            "employee": employee_data
+
+            "due_date":
+            str(job.due_date),
+
+            "remarks":
+            job.remarks,
+
+            "employee":
+            job.employee.name if job.employee else "-"
+
         })
 
     return jsonify(result)
 
 
-@job_bp.route(
-    "/jobs/<int:id>/status",
-    methods=["PUT"]
-)
-@jwt_required()
-def update_job_status(id):
-
-    job = Job.query.get_or_404(id)
-
-    data = request.get_json()
-
-    job.status = data["status"]
-
-    db.session.commit()
-
-    return jsonify({
-        "message": "Job status updated"
-    })
-
-
-
-@job_bp.route(
-    "/jobs/<int:id>",
-    methods=["DELETE"]
-)
+# ==========================
+# Admin - Delete Job
+# ==========================
+@job_bp.route("/jobs/<int:id>", methods=["DELETE"])
 @jwt_required()
 def delete_job(id):
 
@@ -120,4 +96,71 @@ def delete_job(id):
 
     return jsonify({
         "message": "Job deleted"
+    })
+
+
+# ==========================
+# Employee - My Jobs
+# ==========================
+@job_bp.route("/my-jobs")
+@jwt_required()
+def my_jobs():
+
+    claims = get_jwt()
+
+    employee_id = claims["employee_id"]
+
+    jobs = Job.query.filter_by(
+        employee_id=employee_id
+    ).all()
+
+    result = []
+
+    for job in jobs:
+
+        result.append({
+
+            "id": job.id,
+
+            "job_name": job.job_name,
+
+            "customer": job.customer,
+
+            "priority": job.priority,
+
+            "status": job.status,
+
+            "due_date":
+            str(job.due_date),
+
+            "remarks":
+            job.remarks
+
+        })
+
+    return jsonify(result)
+
+
+# ==========================
+# Employee - Update Status
+# ==========================
+@job_bp.route(
+    "/update-job/<int:id>",
+    methods=["PUT"]
+)
+@jwt_required()
+def update_job(id):
+
+    data = request.get_json()
+
+    job = Job.query.get_or_404(id)
+
+    job.status = data["status"]
+
+    job.remarks = data["remarks"]
+
+    db.session.commit()
+
+    return jsonify({
+        "message": "Job updated"
     })

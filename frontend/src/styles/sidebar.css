@@ -1,0 +1,16 @@
+
+
+.nav-link{
+    color:#adb5bd !important;
+    padding:14px 25px !important;
+    border-radius:12px;
+    margin:5px 12px;
+    transition:0.3s;
+    text-decoration:none;
+}
+
+.nav-link:hover{
+    background:#343a40;
+    color:white !important;
+}
+

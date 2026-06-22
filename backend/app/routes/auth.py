@@ -61,13 +61,18 @@ def login():
     ):
 
         access_token = create_access_token(
-            identity=str(user.id)
-        )
+    identity=str(user.id),
+    additional_claims={
+        "role": user.role,
+        "employee_id": user.employee_id
+    }
+)
 
         return jsonify({
-            "message": "Login successful",
-            "token": access_token
-        })
+    "message": "Login successful",
+    "token": access_token,
+    "role": user.role
+})
 
     return jsonify({
         "message": "Invalid email or password"

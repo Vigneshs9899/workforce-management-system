@@ -1,5 +1,6 @@
 from app.extensions import db
 
+
 class Job(db.Model):
 
     __tablename__ = "jobs"
@@ -9,14 +10,13 @@ class Job(db.Model):
         primary_key=True
     )
 
-    job_code = db.Column(
-        db.String(20),
-        unique=True,
+    job_name = db.Column(
+        db.String(200),
         nullable=False
     )
 
-    title = db.Column(
-        db.String(100),
+    customer = db.Column(
+        db.String(200),
         nullable=False
     )
 
@@ -24,18 +24,37 @@ class Job(db.Model):
         db.Text
     )
 
-    status = db.Column(
+    priority = db.Column(
         db.String(20),
+        default="Medium"
+    )
+
+    status = db.Column(
+        db.String(30),
         default="Pending"
+    )
+
+    due_date = db.Column(
+        db.Date
+    )
+
+    remarks = db.Column(
+        db.Text
     )
 
     employee_id = db.Column(
         db.Integer,
-        db.ForeignKey("employees.id")
+        db.ForeignKey("employees.id"),
+        nullable=True
     )
 
-    timesheets = db.relationship(
-    "Timesheet",
-    backref="job",
-    lazy=True
-)
+    created_at = db.Column(
+        db.DateTime,
+        server_default=db.func.now()
+    )
+
+    updated_at = db.Column(
+        db.DateTime,
+        server_default=db.func.now(),
+        onupdate=db.func.now()
+    )

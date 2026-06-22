@@ -30,3 +30,14 @@ class User(db.Model):
         db.String(20),
         default="EMPLOYEE"
     )
+
+    employee_id = db.Column(
+        db.Integer,
+        db.ForeignKey("employees.id"),
+        nullable=True
+    )
+
+    employee = db.relationship(
+        "Employee",
+        backref="user"
+    )
