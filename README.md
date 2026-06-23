@@ -1,4 +1,4 @@
-<img width="1917" height="957" alt="image" src="https://github.com/user-attachments/assets/5c698950-f99e-418f-87e6-32b84e7ef08d" /># Workforce Management System
+# Workforce Management System
 
 A full-stack Workforce Management System built with React, Flask, PostgreSQL, and JWT Authentication. The application provides separate Admin and Employee dashboards with attendance tracking, job management, timesheets, and analytics.
 
@@ -115,10 +115,14 @@ workforce-management-system
 
 ### Jobs Module
 
+<img width="1913" height="957" alt="image" src="https://github.com/user-attachments/assets/1ae83949-5810-4082-95e8-02bcc5e6132d" />
+
 <img width="1912" height="961" alt="image" src="https://github.com/user-attachments/assets/2fb24ce1-2104-4b8d-a120-b0b912f0004d" />
 
 
 ### Attendance Module
+
+<img width="1912" height="960" alt="image" src="https://github.com/user-attachments/assets/3ea01b0d-2719-4cc4-af51-8d49dc31b112" />
 
 <img width="1912" height="960" alt="image" src="https://github.com/user-attachments/assets/37ad99ef-32e9-4f9b-ab5d-4884b52c44f1" />
 
