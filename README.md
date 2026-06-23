@@ -1,43 +1,158 @@
-# Workforce Management System
+<img width="1917" height="957" alt="image" src="https://github.com/user-attachments/assets/5c698950-f99e-418f-87e6-32b84e7ef08d" /># Workforce Management System
 
-## Overview
-Workforce Management System backend built using Flask and PostgreSQL.
+A full-stack Workforce Management System built with React, Flask, PostgreSQL, and JWT Authentication. The application provides separate Admin and Employee dashboards with attendance tracking, job management, timesheets, and analytics.
+
+## Live Demo
+
+Frontend: (https://workforce-management-system-omega.vercel.app/)
+
+Backend API: (https://workforce-management-system-9g14.onrender.com)
 
 ## Features
-- JWT Authentication
-- Employee Management
-- Job Management
-- Timesheet Tracking
-- Dashboard Analytics
 
-## Tech Stack
-- Python
-- Flask
-- PostgreSQL
-- SQLAlchemy
-- JWT
-- bcrypt
+### Authentication & Authorization
 
-## API Endpoints
-### Authentication
-POST /api/auth/register
-POST /api/auth/login
+* JWT Authentication
+* Role-based Access Control
+* Admin and Employee Login
 
-### Employees
-POST /api/employees
-GET /api/employees
-PUT /api/employees/<id>
-DELETE /api/employees/<id>
+### Admin Module
 
-### Jobs
-POST /api/jobs
-GET /api/jobs
-PUT /api/jobs/<id>/status
-DELETE /api/jobs/<id>
+* Dashboard with analytics
+* Employee Management
+* Job Management
+* Timesheet Management
+* Import Data Module
+* Charts and Reports
 
-### Timesheets
-POST /api/timesheets
-GET /api/timesheets
+### Employee Module
 
-### Dashboard
-GET /api/dashboard
+* Personal Dashboard
+* Attendance Tracking
+* My Jobs
+* Timesheets
+* Weekly Hours Summary
+
+### Analytics
+
+* Pie Chart for Job Status
+* Bar Chart for Working Hours
+* Weekly Hours Chart
+
+### Tech Stack
+
+#### Frontend
+
+* React
+* Vite
+* Bootstrap
+* Chart.js
+* Axios
+
+#### Backend
+
+* Flask
+* Flask-JWT-Extended
+* Flask-SQLAlchemy
+* Flask-Migrate
+* Flask-CORS
+
+#### Database
+
+* PostgreSQL
+
+#### Deployment
+
+* Vercel (Frontend)
+* Render (Backend)
+* Neon PostgreSQL (Database)
+
+#### Development Tools
+
+* Docker
+* Git
+* GitHub
+
+## Folder Structure
+
+```
+workforce-management-system
+│
+├── backend
+│   ├── app
+│   ├── models
+│   ├── routes
+│   ├── services
+│   ├── requirements.txt
+│   └── run.py
+│
+├── frontend
+│   ├── src
+│   ├── components
+│   ├── pages
+│   ├── services
+│   └── package.json
+│
+└── docker-compose.yml
+```
+
+## Screenshots
+
+### Login Page
+
+<img width="1917" height="957" alt="image" src="https://github.com/user-attachments/assets/f1b589b8-fa97-40b2-8bef-5a483a2f1e63" />
+
+
+### Admin Dashboard
+
+<img width="1913" height="960" alt="image" src="https://github.com/user-attachments/assets/8aae1e11-3b5e-4692-8798-5218dd47f792" />
+
+
+### Employee Dashboard
+
+<img width="1912" height="962" alt="image" src="https://github.com/user-attachments/assets/093e9169-250c-45a7-b3ac-691aa8137acb" />
+
+
+### Jobs Module
+
+<img width="1912" height="961" alt="image" src="https://github.com/user-attachments/assets/2fb24ce1-2104-4b8d-a120-b0b912f0004d" />
+
+
+### Attendance Module
+
+<img width="1912" height="960" alt="image" src="https://github.com/user-attachments/assets/37ad99ef-32e9-4f9b-ab5d-4884b52c44f1" />
+
+
+## Installation
+
+### Backend
+
+```bash
+pip install -r requirements.txt
+python run.py
+```
+
+### Frontend
+
+```bash
+npm install
+npm run dev
+```
+
+## Future Enhancements
+
+* Notifications
+* Leave Management
+* File Uploads
+* Email Integration
+* PDF Reports
+
+## Author
+
+Vignesh S
+
+LinkedIn:
+https://linkedin.com/in/Vigneshs9899
+
+GitHub:
+https://github.com/Vigneshs9899
